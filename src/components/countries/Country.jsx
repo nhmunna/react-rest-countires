@@ -1,14 +1,17 @@
 import { useState } from "react";
 
-const Country = ({ country }) => {
+const Country = ({ country, handleVisitedCountry }) => {
   console.log(country);
   const [visited, setVisited] = useState(false);
   const handleVisited = () => {
     console.log("Clicked on");
     setVisited(!visited);
+    handleVisitedCountry(country);
   };
   return (
-    <div className="border-4 border-double outline-4 outline-offset-1 shadow-lg inset-shadow-sm inset-shadow-indigo-500/50 text-shadow-lg/20 text-xl font-stretch-expanded text-wrap bg-linear-65 from-purple-500 to-pink-500 text-white border-purple-500 drop-shadow-xl leading-8 rounded-b-lg p-4 ">
+    <div
+      className={`border-4 border-double outline-4 outline-offset-1 shadow-lg inset-shadow-sm inset-shadow-indigo-500/50 text-shadow-lg/20 text-xl font-stretch-expanded text-wrap bg-linear-65 from-purple-500 to-pink-500 text-white ${visited ? "bg-linear-to-t from-sky-500 to-indigo-500" : " border-purple-500 drop-shadow-xl"} leading-8 rounded-b-lg p-4`}
+    >
       <img src={country.flags.flags.png} alt={country.flags.flags.alt} />
       <h3 className="pt-4">Name: {country.name.common}</h3>
       <h3>Capital: {country.capital.capital[0]}</h3>
@@ -22,11 +25,11 @@ const Country = ({ country }) => {
         </p>
       ))}
       <p>Language:</p>
-      {Object.keys(country.languages.languages).map((key) => (
-        <ol key={key}>
-          <li>{country.languages.languages[key]}</li>
-        </ol>
-      ))}
+      <ol>
+        {Object.keys(country.languages.languages).map((key) => (
+          <li key={key}>{country.languages.languages[key]}</li>
+        ))}
+      </ol>
       <p>Region: {country.region.region}</p>
       <button
         onClick={handleVisited}
